@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kontak - PT Aplus Pacific</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <style>
+    /* Styling layout utama halaman kontak */
+   .contact-wrapper {
+  max-width: 1200px;
+  margin: 25px auto; /* dulu 100px, dikurang drastis biar naik */
+  padding: 20px 40px 40px; /* padding atas dikurang biar rapat */
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+    .contact-info {
+      flex: 1 1 300px;
+    }
+    .contact-info h2 {
+      font-size: 40px;
+      color: #1A3761;
+      margin-bottom: 20px;
+    }
+    .contact-info p {
+      margin: 6px 0;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .contact-info strong {
+      color: #1A3761;
+    }
+
+    .social-icons img {
+      width: 30px;
+      margin-right: 10px;
+    }
+
+    .contact-map {
+      flex: 1 1 350px;
+    }
+    .contact-map iframe {
+      width: 100%;
+      height: 350px;
+      border: none;
+      border-radius: 12px;
+    }
+
+    .contact-form {
+      flex: 1 1 350px;
+    }
+    .contact-form h3 {
+      font-size: 24px;
+      color: #1A3761;
+      margin-bottom: 10px;
+    }
+    .contact-form p {
+      margin-bottom: 16px;
+    }
+    .contact-form input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    .wa-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background-color: #25D366;
+      color: white;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .wa-btn:hover {
+      background-color: #1ebe5d;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px 0;
+      font-size: 14px;
+      color: #666;
+    }
+
+    @media (max-width: 900px) {
+      .contact-wrapper {
+        flex-direction: column;
+        margin-top: 140px;
+      }
+    }
+    .contact-section {
+  background: #fff;
+  padding: 40px 60px;
+}
+
+.contact-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* Biar sejajar di atas */
+  gap: 30px;
+}
+
+.contact-info, .contact-map, .contact-form {
+  flex: 1;
+}
+
+.contact-info h2 {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  color: #0e2f67;
+}
+
+.contact-map iframe {
+  width: 100%;
+  height: 350px;
+  border-radius: 8px;
+  margin-top: 5px; /* Biar sejajar pas banget */
+}
+
+.contact-form h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #0e2f67;
+}
+
+.contact-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.contact-form textarea {
+  resize: vertical;
+  height: 100px;
+}
+
+.wa-button {
+  background-color: #25d366;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.wa-button:hover {
+  background-color: #1ebe5c;
+}
+
+.social-icons img {
+  width: 40px;
+  margin-right: 10px;
+}
+  </style>
+</head>
+
+<body>
+  <!-- ======= NAVBAR (biarin tetap seperti file kamu) ======= -->
+  <header>
+    <div class="nav-container">
+      <div class="left-section">
+        <div class="logo-header">
+          <a href="index.html" style="display: flex; align-items: center; text-decoration: none; color: inherit;">
+            <img src="logo.png" alt="Logo" />
+            <h1>APLUS</h1>
+          </a>
+        </div>
+        <div class="menu-left">
+          <a href="produk.html">Produk</a>
+          <a href="#">Area</a>
+          <a href="#">Kategori</a>
+        </div>
+      </div>
+
+      <div class="right-section">
+        <div class="top-right">
+          <div class="search-box">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="search-icon">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 21l-4.35-4.35M17 10.5A6.5 6.5 0 104 10.5a6.5 6.5 0 0013 0z" />
+            </svg>
+            <input type="text" placeholder="Cari produk" id="search-input" />
+          </div>
+
+          <div class="lang">
+            <span id="lang-en" style="cursor:pointer;">EN</span>
+            <span>|</span>
+            <span id="lang-id" style="cursor:pointer;">ID</span>
+          </div>
+        </div>
+
+        <div class="menu-right">
+          <a href="profil.html">Profil</a>
+          <a href="proyek.html">Proyek</a>
+          <a href="artikel.html">Artikel</a>
+          <a href="kontak.html" class="active-nav">Kontak</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======= ISI HALAMAN KONTAK ======= -->
+  <main>
+    <div class="contact-wrapper">
+      <!-- Info Perusahaan -->
+      <section class="contact-section">
+  <div class="contact-container">
+
+    <!-- Kiri -->
+    <div class="contact-info">
+      <h2>Kontak</h2>
+      <p><strong>PT Aplus Pacific</strong></p>
+      <p>Jl. Prabu Siliwangi Km. 3, Jatiuwung<br>Tangerang, Banten 15135</p>
+
+      <p><strong>Phone:</strong> (021) 662-8820<br>
+         <strong>Fax:</strong> 662-8821<br>
+         <strong>Email:</strong> info@aplus.co.id<br>
+         <strong>Customer Care (WA):</strong> (+62) 811-910-8828</p>
+
+      <div class="social-icons">
+        <img src="assets/img/fb.png" alt="Facebook">
+        <img src="assets/img/ig.png" alt="Instagram">
+        <img src="assets/img/yt.png" alt="YouTube">
+      </div>
+    </div>
+
+    <!-- Tengah -->
+    <div class="contact-map">
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!..." 
+        width="100%" 
+        height="350" 
+        style="border:0;" 
+        allowfullscreen=""
+        loading="lazy">
+      </iframe>
+    </div>
+
+    <!-- Kanan -->
+    <div class="contact-form">
+      <h3>Hubungi Kami</h3>
+      <p>Tim kami akan segera membalas pesan Anda.</p>
+
+      <form>
+        <input type="text" placeholder="Nama Anda" required>
+        <input type="email" placeholder="Email Anda" required>
+        <input type="text" placeholder="No. HP" required>
+        <select>
+          <option>Perorangan</option>
+          <option>Kontraktor</option>
+          <option>Toko</option>
+        </select>
+        <textarea placeholder="Kebutuhan produk"></textarea>
+        <button type="submit" class="wa-button">Customer Care</button>
+      </form>
+    </div>
+
+  </div>
+</section>
+<script>
+    // biar tombol bahasa & search tetap jalan kayak di beranda
+    const langEN = document.getElementById("lang-en");
+    const langID = document.getElementById("lang-id");
+    langEN.addEventListener("click", () => document.documentElement.lang = "en");
+    langID.addEventListener("click", () => document.documentElement.lang = "id");
+
+    const searchInput = document.getElementById("search-input");
+    const searchIcon = document.querySelector(".search-icon");
+    function goSearch() {
+      const q = searchInput.value.trim();
+      if (q) {
+        localStorage.setItem("searchQuery", q.toLowerCase());
+        window.location.href = "produk.html";
+      }
+    }
+    searchIcon.addEventListener("click", goSearch);
+    searchInput.addEventListener("keypress", e => { if (e.key === "Enter") goSearch(); });
+  </script>
+  </body>
+</html>

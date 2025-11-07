@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Produk - Toko Bangunan Maju Jaya</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .disabled { opacity: 0.5; pointer-events: none; }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <!-- Navbar -->
+  <nav class="bg-[#1A3761] text-white px-6 py-4 flex justify-between items-center">
+    <h1 class="text-xl font-semibold">🏗️ Toko Bangunan Maju Jaya</h1>
+    <div class="flex items-center gap-6">
+      <a href="beranda.html" id="btnBeranda" class="hover:underline cursor-pointer">Beranda</a>
+      <a href="keranjang.html" class="relative hover:underline">
+        Keranjang
+        <span id="cartCount" class="absolute -top-2 -right-3 bg-red-500 text-xs px-2 py-0.5 rounded-full">0</span>
+      </a>
+    </div>
+  </nav>
+
+  <main class="max-w-7xl mx-auto p-6">
+    <h2 class="text-3xl font-bold mb-4 text-center">Daftar Produk</h2>
+    <input id="searchInput" type="text" placeholder="Cari produk..." class="border p-2 w-full rounded-md mb-6 shadow-sm">
+    <div id="productList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+  </main>
+
+  <!-- Popup Pilih Ukuran -->
+  <div id="sizePopup" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+    <div class="bg-white p-6 rounded-xl shadow-lg w-80">
+      <h3 class="text-xl font-semibold mb-4">Pilih Ukuran</h3>
+      <div id="sizeOptions" class="space-y-2"></div>
+      <div class="flex justify-end mt-4 gap-2">
+        <button id="cancelSize" class="px-3 py-1 bg-gray-300 rounded-md">Batal</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('btnBeranda').addEventListener('click', e => {
+      e.preventDefault();
+      window.location.href = 'beranda.html';
+    });
+
+    // daftar produk dengan kategori/tag untuk pencarian akurat
+    const products = [
+      {name: "Semen Tiga Roda", img: "assets/img/semen.jpg", price: 55000, sizes: {"40kg":120,"50kg":90}, tags:["semen","material","bangunan"]},
+      {name: "Cat Dulux", img: "assets/img/cat.jpg", price: 85000, sizes: {"1L":60,"5L":30}, tags:["cat","pewarna","tembok"]},
+      {name: "Cat Kayu Avian", img: "assets/img/cat2.jpg", price: 70000, sizes: {"1L":40,"5L":15}, tags:["cat","avian","kayu","pewarna"]},
+      {name: "Pasir Bangunan", img: "assets/img/pasir.jpg", price: 250000, sizes: {"1m³":15}, tags:["pasir","material","bangunan"]},
+      {name: "Batu Bata Merah", img: "assets/img/bata.jpg", price: 750, sizes: {"pcs":5000}, tags:["batu","bata","material"]},
+      {name: "Batu Split", img: "assets/img/batu.jpg", price: 270000, sizes: {"1m³":10}, tags:["batu","split","material"]},
+      {name: "Tang Kombinasi", img: "assets/img/tang.jpg", price: 38000, sizes: {"6 inch":80}, tags:["tang","alat","kombinasi","besi"]},
+      {name: "Kunci Inggris", img: "assets/img/kunci.jpg", price: 45000, sizes: {"6 inch":40}, tags:["alat","kunci","inggris","besi"]},
+      {name: "Sekop", img: "assets/img/sekop.jpg", price: 35000, sizes: {"pcs":60}, tags:["sekop","alat","bangunan"]},
+      {name: "Palu Besi", img: "assets/img/palu.jpg", price: 40000, sizes: {"pcs":70}, tags:["alat","palu","besi"]},
+      {name: "Kayu Balok", img: "assets/img/kayu.jpg", price: 95000, sizes: {"2m":60,"4m":40}, tags:["kayu","balok","material"]},
+      {name: "Triplek 4mm", img: "assets/img/triplek.jpg", price: 65000, sizes: {"4mm":40}, tags:["triplek","kayu","bangunan"]},
+      {name: "Genteng", img: "assets/img/genteng.jpg", price: 4500, sizes: {"pcs":1000}, tags:["genteng","atap","bangunan"]},
+    ];
+
+    const productList = document.getElementById("productList");
+    const searchInput = document.getElementById("searchInput");
+    const sizePopup = document.getElementById("sizePopup");
+    const sizeOptions = document.getElementById("sizeOptions");
+    const cancelSize = document.getElementById("cancelSize");
+    const cartCount = document.getElementById("cartCount");
+    let filteredProducts = [...products];
+    let selectedProduct = null;
+
+    // ambil keyword dari URL
+    const params = new URLSearchParams(window.location.search);
+    const keyword = params.get("search");
+    if (keyword) {
+      searchInput.value = keyword;
+      filterProducts(keyword);
+    } else {
+      renderProducts(products);
+    }
+
+    function renderProducts(list) {
+      productList.innerHTML = "";
+      if (list.length === 0) {
+        productList.innerHTML = `<p class='col-span-full text-center text-gray-500'>Produk tidak ditemukan.</p>`;
+        return;
+      }
+      list.forEach(p => {
+        const allOut = Object.values(p.sizes).every(stock => stock === 0);
+        const div = document.createElement("div");
+        div.className = "bg-white p-4 rounded-xl shadow hover:shadow-lg transition";
+        div.innerHTML = `
+          <img src="${p.img}" class="w-full h-36 object-contain mb-3">
+          <h3 class="font-semibold text-lg">${p.name}</h3>
+          <p class="text-gray-600 text-sm mb-2">Rp ${p.price.toLocaleString()}</p>
+          <button class="w-full py-2 rounded-md ${allOut ? 'bg-gray-400' : 'bg-[#1A3761] text-white hover:bg-[#274c88]'}">
+            ${allOut ? 'Stok Habis' : 'Pilih Ukuran'}
+          </button>
+        `;
+        if (!allOut) div.querySelector("button").onclick = () => openSizePopup(p);
+        productList.appendChild(div);
+      });
+    }
+
+    function filterProducts(q) {
+      const lower = q.toLowerCase();
+      filteredProducts = products.filter(p =>
+        p.name.toLowerCase().includes(lower) ||
+        p.tags.some(tag => tag.includes(lower))
+      );
+      renderProducts(filteredProducts);
+    }
+
+    searchInput.addEventListener("input", e => filterProducts(e.target.value));
+    cancelSize.onclick = () => sizePopup.classList.add("hidden");
+
+    function openSizePopup(product) {
+      selectedProduct = product;
+      sizeOptions.innerHTML = "";
+      for (const [size, stock] of Object.entries(product.sizes)) {
+        const btn = document.createElement("button");
+        btn.className = `w-full flex justify-between items-center border p-2 rounded-md hover:bg-gray-100 ${stock===0?'disabled bg-gray-200 text-red-500':''}`;
+        btn.innerHTML = `<span>${size}</span><span class="text-sm text-gray-500">Stok: ${stock}</span>`;
+        if (stock>0) btn.onclick = () => addToCart(product, size);
+        sizeOptions.appendChild(btn);
+      }
+      sizePopup.classList.remove("hidden");
+    }
+
+    function addToCart(product, size) {
+      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+      const existing = cart.find(i => i.name===product.name && i.size===size);
+      if (existing) existing.qty++;
+      else cart.push({name: product.name, size, price: product.price, qty: 1, img: product.img});
+      localStorage.setItem("cart", JSON.stringify(cart));
+      updateCartCount();
+      sizePopup.classList.add("hidden");
+    }
+
+    function updateCartCount() {
+      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+      cartCount.textContent = cart.reduce((sum,i)=>sum+i.qty,0);
+    }
+    updateCartCount();
+  </script>
+</body>
+</html>

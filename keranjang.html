@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keranjang - Toko Bangunan Maju Jaya</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .disabled { opacity: 0.5; pointer-events: none; }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+  <!-- Navbar -->
+  <nav class="bg-[#1A3761] text-white px-6 py-4 flex justify-between items-center">
+    <h1 class="text-xl font-semibold">🏗️ Toko Bangunan Maju Jaya</h1>
+    <a href="produk.html" class="hover:underline">← Kembali ke Produk</a>
+  </nav>
+
+  <main class="max-w-5xl mx-auto p-6">
+    <h2 class="text-3xl font-bold mb-6 text-center">Keranjang Belanja</h2>
+
+    <div id="cartList" class="bg-white rounded-xl shadow-md p-4 divide-y"></div>
+
+    <div class="mt-6 flex justify-between items-center flex-wrap gap-4">
+      <p id="cartTotal" class="text-xl font-semibold">Total: Rp 0</p>
+      <div class="flex gap-3">
+        <button id="clearCart" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Hapus Semua</button>
+        <button id="checkoutBtn" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">
+          🛒 Pesan via WhatsApp
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const cartList = document.getElementById("cartList");
+    const cartTotal = document.getElementById("cartTotal");
+    const clearCart = document.getElementById("clearCart");
+    const checkoutBtn = document.getElementById("checkoutBtn");
+
+    let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+    function renderCart() {
+      cartList.innerHTML = "";
+      if (cart.length === 0) {
+        cartList.innerHTML = `<p class="text-center py-4 text-gray-500">Keranjang masih kosong 😅</p>`;
+        cartTotal.textContent = "Total: Rp 0";
+        return;
+      }
+
+      let total = 0;
+
+      cart.forEach((item, i) => {
+        const itemTotal = item.price * item.qty;
+        total += itemTotal;
+
+        const row = document.createElement("div");
+        row.className = "flex items-center justify-between py-4";
+
+        row.innerHTML = `
+          <div class="flex items-center space-x-4">
+            <img src="${item.img}" alt="${item.name}" class="w-16 h-16 object-contain">
+            <div>
+              <p class="font-semibold text-lg">${item.name}</p>
+              <p class="text-sm text-gray-600">Ukuran: ${item.size}</p>
+              <p class="text-sm text-gray-500">Harga: Rp ${item.price.toLocaleString()}</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <button class="px-3 py-1 bg-gray-200 rounded-md text-lg minus">−</button>
+            <span class="font-semibold">${item.qty}</span>
+            <button class="px-3 py-1 bg-gray-200 rounded-md text-lg plus ${item.stock && item.qty >= item.stock[item.size] ? 'disabled' : ''}">+</button>
+            <p class="w-32 text-right font-medium">Rp ${itemTotal.toLocaleString()}</p>
+          </div>
+        `;
+
+        // Tombol tambah/kurang
+        const minusBtn = row.querySelector(".minus");
+        const plusBtn = row.querySelector(".plus");
+
+        minusBtn.onclick = () => {
+          if (item.qty > 1) item.qty--;
+          else cart.splice(i, 1);
+          updateCart();
+        };
+
+        plusBtn.onclick = () => {
+          const maxStock = item.stock ? item.stock[item.size] : 9999;
+          if (item.qty < maxStock) {
+            item.qty++;
+            updateCart();
+          } else {
+            alert("Stok tidak mencukupi!");
+          }
+        };
+
+        cartList.appendChild(row);
+      });
+
+      cartTotal.textContent = "Total: Rp " + total.toLocaleString();
+    }
+
+    function updateCart() {
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+    }
+
+    clearCart.onclick = () => {
+      if (confirm("Yakin ingin menghapus semua item di keranjang?")) {
+        cart = [];
+        updateCart();
+      }
+    };
+
+    // ==========================
+    // 🔥 Fitur Checkout WhatsApp
+    // ==========================
+    checkoutBtn.onclick = () => {
+      if (cart.length === 0) {
+        alert("Keranjang masih kosong!");
+        return;
+      }
+
+      let pesan = "Halo Admin,%0ASaya ingin memesan barang berikut:%0A%0A";
+      let total = 0;
+
+      cart.forEach(item => {
+        const subtotal = item.price * item.qty;
+        total += subtotal;
+        pesan += `🧱 *${item.name}* (${item.size}) x${item.qty} = Rp ${subtotal.toLocaleString()}%0A`;
+      });
+
+      pesan += `%0A💰 *Total: Rp ${total.toLocaleString()}*%0A%0AMohon konfirmasi ketersediaan barangnya ya. Terima kasih 🙏`;
+
+      // Ganti nomor admin di sini (format internasional, tanpa +)
+      const adminNumber = "6281234567890"; // contoh: 6285xxxxxxx
+
+      const url = `https://wa.me/${adminNumber}?text=${pesan}`;
+      window.open(url, "_blank");
+    };
+
+    renderCart();
+  </script>
+</body>
+</html>
