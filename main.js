@@ -5,11 +5,11 @@ function getProducts() {
   // kalau kosong (belum pernah diisi admin), pakai default
   if (saved.length === 0) {
     return [
-      { name: "Semen Gresik", image: "assets/img/semen.png", stock: 45 },
-      { name: "Cat Dulux", image: "assets/img/cat.png", stock: 30 },
-      { name: "Paku Baja 5cm", image: "assets/img/paku.png", stock: 100 },
-      { name: "Pasir Bangunan", image: "assets/img/pasir.png", stock: 70 },
-      { name: "Batu Bata Merah", image: "assets/img/batubata.png", stock: 200 },
+      { name: "Semen Gresik", image: "Assets/Img/semen.png", stock: 45 },
+      { name: "Cat Dulux", image: "Assets/Img/cat.png", stock: 30 },
+      { name: "Paku Baja 5cm", image: "Assets/Img/paku.png", stock: 100 },
+      { name: "Pasir Bangunan", image: "Assets/Img/pasir.png", stock: 70 },
+      { name: "Batu Bata Merah", image: "Assets/Img/batubata.png", stock: 200 },
     ];
   }
 
@@ -47,7 +47,7 @@ function renderProducts(filter = "") {
       "bg-white shadow-lg rounded-lg overflow-hidden hover:scale-105 transition-transform duration-200";
 
     card.innerHTML = `
-      <img src="${p.image}" alt="${p.name}" class="w-full h-48 object-cover">
+      <Img src="${p.image}" alt="${p.name}" class="w-full h-48 object-cover">
       <div class="p-4">
         <h3 class="text-lg font-semibold mb-2">${p.name}</h3>
         <p class="text-gray-600 mb-3">Stok:
