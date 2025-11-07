@@ -48,19 +48,19 @@
 
     // daftar produk dengan kategori/tag untuk pencarian akurat
     const products = [
-      {name: "Semen Tiga Roda", img: "assets/img/semen.jpg", price: 55000, sizes: {"40kg":120,"50kg":90}, tags:["semen","material","bangunan"]},
-      {name: "Cat Dulux", img: "assets/img/cat.jpg", price: 85000, sizes: {"1L":60,"5L":30}, tags:["cat","pewarna","tembok"]},
-      {name: "Cat Kayu Avian", img: "assets/img/cat2.jpg", price: 70000, sizes: {"1L":40,"5L":15}, tags:["cat","avian","kayu","pewarna"]},
-      {name: "Pasir Bangunan", img: "assets/img/pasir.jpg", price: 250000, sizes: {"1m³":15}, tags:["pasir","material","bangunan"]},
-      {name: "Batu Bata Merah", img: "assets/img/bata.jpg", price: 750, sizes: {"pcs":5000}, tags:["batu","bata","material"]},
-      {name: "Batu Split", img: "assets/img/batu.jpg", price: 270000, sizes: {"1m³":10}, tags:["batu","split","material"]},
-      {name: "Tang Kombinasi", img: "assets/img/tang.jpg", price: 38000, sizes: {"6 inch":80}, tags:["tang","alat","kombinasi","besi"]},
-      {name: "Kunci Inggris", img: "assets/img/kunci.jpg", price: 45000, sizes: {"6 inch":40}, tags:["alat","kunci","inggris","besi"]},
-      {name: "Sekop", img: "assets/img/sekop.jpg", price: 35000, sizes: {"pcs":60}, tags:["sekop","alat","bangunan"]},
-      {name: "Palu Besi", img: "assets/img/palu.jpg", price: 40000, sizes: {"pcs":70}, tags:["alat","palu","besi"]},
-      {name: "Kayu Balok", img: "assets/img/kayu.jpg", price: 95000, sizes: {"2m":60,"4m":40}, tags:["kayu","balok","material"]},
-      {name: "Triplek 4mm", img: "assets/img/triplek.jpg", price: 65000, sizes: {"4mm":40}, tags:["triplek","kayu","bangunan"]},
-      {name: "Genteng", img: "assets/img/genteng.jpg", price: 4500, sizes: {"pcs":1000}, tags:["genteng","atap","bangunan"]},
+      {name: "Semen Tiga Roda", Img: "Assets/Img/semen.jpg", price: 55000, sizes: {"40kg":120,"50kg":90}, tags:["semen","material","bangunan"]},
+      {name: "Cat Dulux", Img: "Assets/Img/cat.jpg", price: 85000, sizes: {"1L":60,"5L":30}, tags:["cat","pewarna","tembok"]},
+      {name: "Cat Kayu Avian", Img: "Assets/Img/cat2.jpg", price: 70000, sizes: {"1L":40,"5L":15}, tags:["cat","avian","kayu","pewarna"]},
+      {name: "Pasir Bangunan", Img: "Assets/Img/pasir.jpg", price: 250000, sizes: {"1m³":15}, tags:["pasir","material","bangunan"]},
+      {name: "Batu Bata Merah", Img: "Assets/Img/bata.jpg", price: 750, sizes: {"pcs":5000}, tags:["batu","bata","material"]},
+      {name: "Batu Split", Img: "Assets/Img/batu.jpg", price: 270000, sizes: {"1m³":10}, tags:["batu","split","material"]},
+      {name: "Tang Kombinasi", Img: "Assets/Img/tang.jpg", price: 38000, sizes: {"6 inch":80}, tags:["tang","alat","kombinasi","besi"]},
+      {name: "Kunci Inggris", Img: "Assets/Img/kunci.jpg", price: 45000, sizes: {"6 inch":40}, tags:["alat","kunci","inggris","besi"]},
+      {name: "Sekop", Img: "Assets/Img/sekop.jpg", price: 35000, sizes: {"pcs":60}, tags:["sekop","alat","bangunan"]},
+      {name: "Palu Besi", img: "Assets/Img/palu.jpg", price: 40000, sizes: {"pcs":70}, tags:["alat","palu","besi"]},
+      {name: "Kayu Balok", Img: "Assets/Img/kayu.jpg", price: 95000, sizes: {"2m":60,"4m":40}, tags:["kayu","balok","material"]},
+      {name: "Triplek 4mm", Img: "Assets/Img/triplek.jpg", price: 65000, sizes: {"4mm":40}, tags:["triplek","kayu","bangunan"]},
+      {name: "Genteng", Img: "Assets/Img/genteng.jpg", price: 4500, sizes: {"pcs":1000}, tags:["genteng","atap","bangunan"]},
     ];
 
     const productList = document.getElementById("productList");
@@ -93,7 +93,7 @@
         const div = document.createElement("div");
         div.className = "bg-white p-4 rounded-xl shadow hover:shadow-lg transition";
         div.innerHTML = `
-          <img src="${p.img}" class="w-full h-36 object-contain mb-3">
+          <Img src="${p.Img}" class="w-full h-36 object-contain mb-3">
           <h3 class="font-semibold text-lg">${p.name}</h3>
           <p class="text-gray-600 text-sm mb-2">Rp ${p.price.toLocaleString()}</p>
           <button class="w-full py-2 rounded-md ${allOut ? 'bg-gray-400' : 'bg-[#1A3761] text-white hover:bg-[#274c88]'}">
@@ -134,7 +134,7 @@
       const cart = JSON.parse(localStorage.getItem("cart") || "[]");
       const existing = cart.find(i => i.name===product.name && i.size===size);
       if (existing) existing.qty++;
-      else cart.push({name: product.name, size, price: product.price, qty: 1, img: product.img});
+      else cart.push({name: product.name, size, price: product.price, qty: 1, Img: product.Img});
       localStorage.setItem("cart", JSON.stringify(cart));
       updateCartCount();
       sizePopup.classList.add("hidden");
