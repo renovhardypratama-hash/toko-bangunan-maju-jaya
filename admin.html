@@ -20,10 +20,10 @@
   <script>
     // Data default untuk pertama kali
     const defaultProducts = [
-      { name: "Semen Tiga Roda", img: "assets/semen.png", price: 55000, sizes: { "40kg": 120, "50kg": 90 } },
-      { name: "Cat Dulux", img: "assets/cat.png", price: 85000, sizes: { "1L": 60, "5L": 30, "20L": 10 } },
-      { name: "Paku Baja", img: "assets/paku.png", price: 15000, sizes: { "3cm": 500, "5cm": 300, "7cm": 200 } },
-      { name: "Pasir Bangunan", img: "assets/pasir.png", price: 250000, sizes: { "1m³": 15, "2m³": 8 } }
+      { name: "Semen Tiga Roda", Img: "Assets/semen.png", price: 55000, sizes: { "40kg": 120, "50kg": 90 } },
+      { name: "Cat Dulux", Img: "Assets/cat.png", price: 85000, sizes: { "1L": 60, "5L": 30, "20L": 10 } },
+      { name: "Paku Baja", Img: "Assets/paku.png", price: 15000, sizes: { "3cm": 500, "5cm": 300, "7cm": 200 } },
+      { name: "Pasir Bangunan", Img: "Assets/pasir.png", price: 250000, sizes: { "1m³": 15, "2m³": 8 } }
     ];
 
     // Ambil dari localStorage, kalau kosong isi default
@@ -50,7 +50,7 @@
         }
         const card = `
           <div class="bg-white p-4 rounded-xl shadow">
-            <img src="${p.img}" class="w-full h-40 object-contain mb-3">
+            <Img src="${p.Img}" class="w-full h-40 object-contain mb-3">
             <h3 class="font-semibold text-lg">${p.name}</h3>
             <p class="text-sm text-gray-500 mb-2">Rp ${p.price.toLocaleString()}</p>
             ${sizeInputs}
